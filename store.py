@@ -1,17 +1,17 @@
 """Owner-scoped persistence. Passwords and verification codes never enter SQLite."""
 
-import hashlib
 import base64
+import hashlib
 import io
 import json
 import os
-from pathlib import Path
 import sqlite3
 import time
+from pathlib import Path
 
 from cryptography.fernet import Fernet
-from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from PIL import Image, UnidentifiedImageError
 
 

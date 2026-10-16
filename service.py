@@ -2,7 +2,7 @@ import asyncio
 import time
 
 from .client import VRCClient, VRCError
-from .domain import normalize_friend, resolve_friend, Transitions
+from .domain import Transitions, normalize_friend, resolve_friend
 
 
 class Service:
@@ -67,7 +67,9 @@ class Service:
         )
         self.generations[owner] = self.generations.get(owner, 0) + 1
         self.clients[owner] = client
-        self.pending.pop(owner, None)
+        old_pending = self.pending.pop(owner, None)
+        if old_pending and old_pending["client"] is not client:
+            old_pending["client"].close()
         self.worlds.pop(owner, None)
         self.snapshots = {k: v for k, v in self.snapshots.items() if k[0] != owner}
         self.transitions.reset(owner)
@@ -93,7 +95,7 @@ class Service:
                     return methods
                 self._commit_login(owner, client, profile)
                 return []
-            except Exception as exc:
+            except (Exception, asyncio.CancelledError) as exc:
                 client.close()
                 if isinstance(exc, VRCError) and exc.status == 429:
                     self.backoff[owner] = time.monotonic() + exc.retry_after
@@ -158,7 +160,7 @@ class Service:
             try:
                 profile = await self._run(client.profile)
                 self._commit_login(owner, client, profile)
-            except Exception as exc:
+            except (Exception, asyncio.CancelledError) as exc:
                 client.close()
                 if isinstance(exc, VRCError) and exc.status == 429:
                     self.backoff[owner] = time.monotonic() + exc.retry_after

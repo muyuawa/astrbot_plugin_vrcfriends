@@ -4,11 +4,10 @@ import asyncio
 import importlib
 import importlib.util
 import os
-from pathlib import Path
 import subprocess
+from pathlib import Path
 
-
-DEPENDENCIES = ("vrchatapi", "cryptography", "PIL", "jinja2", "playwright")
+DEPENDENCIES = ("vrchatapi", "urllib3", "cryptography", "PIL", "jinja2", "playwright")
 
 
 class SetupError(RuntimeError):

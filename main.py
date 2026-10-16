@@ -1,12 +1,13 @@
 import asyncio
+import time
 from contextlib import suppress
 from pathlib import Path
-import time
 
 from astrbot.api import AstrBotConfig, logger
-from astrbot.api.event import filter, AstrMessageEvent, MessageChain
+from astrbot.api.event import AstrMessageEvent, MessageChain, filter
+from astrbot.api.message_components import Image
+from astrbot.api.message_components import Reply as QuotedReply
 from astrbot.api.star import Context, Star
-from astrbot.api.message_components import Image, Reply as QuotedReply
 from astrbot.core.utils.astrbot_path import get_astrbot_data_path
 
 from .bootstrap import SetupError, ensure_python_dependencies
@@ -38,7 +39,7 @@ class VRCFriends(Star):
             self.store = Store(self.root)
             self.service = Service(
                 self.store,
-                user_agent=f"AstrBot-VRCFriends/0.1.3 {contact}",
+                user_agent=f"AstrBot-VRCFriends/1.0.0 {contact}",
                 proxy=str(self.config.get("proxy", "")),
             )
             self.controller = Controller(self.service)

@@ -1,9 +1,8 @@
-from dataclasses import dataclass
 import math
 import shlex
+from dataclasses import dataclass
 
 from cryptography.fernet import InvalidToken
-
 
 HELP = """VRC 好友 · 聊天指令
 私聊登录：/vrc 登录 用户名 密码

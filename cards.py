@@ -1,13 +1,14 @@
 import asyncio
 import base64
-from datetime import datetime, timedelta, timezone
 import hashlib
-from pathlib import Path
 import uuid
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from .bootstrap import install_chromium
+
 from .assets import ImageAssets
+from .bootstrap import install_chromium
 
 
 class Cards:

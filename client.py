@@ -1,8 +1,8 @@
 """Synchronous vrchatapi operations; each instance has its own SDK CookieJar."""
 
-from http.cookiejar import Cookie
 import json
 import re
+from http.cookiejar import Cookie
 
 import vrchatapi
 from vrchatapi.api.authentication_api import AuthenticationApi
@@ -78,11 +78,9 @@ class VRCClient:
                 body = {}
             if isinstance(body, dict) and body.get("requiresTwoFactorAuth"):
                 return body
-            message = str(
-                body.get("error", {}).get("message", "")
-                if isinstance(body, dict)
-                else ""
-            ).lower()
+            detail = body.get("error", body) if isinstance(body, dict) else body
+            message = detail.get("message", "") if isinstance(detail, dict) else detail
+            message = message.lower() if isinstance(message, str) else ""
             headers = exc.headers or {}
             try:
                 retry_after = min(3600, max(60, int(headers.get("Retry-After", 60))))

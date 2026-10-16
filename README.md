@@ -4,7 +4,7 @@ AstrBot 插件：查看 VRChat 好友在线状态和房间，收藏优先展示�
 
 ## 安装
 
-需要 Python 3.10+、AstrBot 4.x，使用 NapCat / aiocqhttp 或 Satori 等支持主动消息的适配器。
+需要 AstrBot 4.x，使用 NapCat / aiocqhttp 或 Satori 等支持主动消息的适配器。插件代码要求 Python 3.10+，实际 Python 版本还需满足所用 AstrBot 版本的要求。
 
 1. 在 AstrBot 插件页面选择从仓库安装，填写 `https://github.com/muyuawa/astrbot_plugin_vrcfriends`；也可上传安装包，或将插件文件夹放入 `data/plugins/` 后重载。
 2. Python 依赖会自动检查并通过 AstrBot 安装。缺少 Chromium 时，插件会在后台自动下载；首次准备进度可查看 AstrBot 日志。
@@ -36,6 +36,8 @@ python -m playwright install-deps chromium
 ## 登录
 
 每个 QQ 分别私聊机器人：
+
+请仅在可信机器人的私聊中发送登录信息。插件不保存密码和验证码，但聊天平台或机器人本体的日志仍可能保留原始消息。
 
 ```text
 /vrc 登录 用户名 密码
@@ -80,5 +82,11 @@ python -m playwright install-deps chromium
 - 名字左侧显示好友头像，右侧在地图封面可获取时显示封面；头像不可用时显示昵称首字，私人房间不显示地图封面。
 - 默认每 120 秒检查一次，可用 `poll_interval` 设置为 60–3600 秒。网页上线、换房间、换灯色不提醒；首次同步及断线恢复不补发已在线好友。
 - 仅使用只读 HTTP 轮询，无 WebSocket 或在线心跳；VRChat 仍可能将 API 会话标记为网页活跃。
-- 认证 Cookie 按 QQ 独立加密，密码和验证码不落盘。数据位于 `data/plugin_data/astrbot_plugin_vrcfriends/`，备份须同时保留数据库和 `session.key`。
+- 认证 Cookie 按 QQ 独立加密，插件不保存密码和验证码。数据位于 `data/plugin_data/astrbot_plugin_vrcfriends/`，备份须同时保留数据库和 `session.key`。
 - 已通过本地测试，真实 VRChat 登录和 QQ 收发需在你的实例中验证。
+
+## 开发与许可
+
+安装 `requirements-dev.txt` 后，在仓库根目录运行 `python -m pytest`、`python -m ruff check .` 和 `python -m ruff format --check .`。测试使用模拟接口，不需要真实 VRC 凭据，也不会发送 QQ 消息。
+
+接口基于 [vrchatapi-python](https://github.com/vrchatapi/vrchatapi-python)，登录地点确认提示参考 [VRCX](https://github.com/vrcx-team/VRCX)。本插件非 VRChat 官方产品，采用 [MIT 许可证](LICENSE)。

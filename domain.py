@@ -1,6 +1,5 @@
 import re
 
-
 STATUS = {
     "join me": ("blue", "欢迎加入"),
     "active": ("green", "在线"),

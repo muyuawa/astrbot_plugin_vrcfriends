@@ -2,15 +2,14 @@
 
 import asyncio
 import base64
-from collections import OrderedDict
-from io import BytesIO
 import re
 import time
+from collections import OrderedDict
+from io import BytesIO
 from urllib.parse import urljoin, urlsplit
 
-from PIL import Image, UnidentifiedImageError
 import urllib3
-
+from PIL import Image, UnidentifiedImageError
 
 API_HOSTS = {"api.vrchat.cloud", "api.vrchat.com"}
 IMAGE_HOSTS = API_HOSTS | {"files.vrchat.cloud", "cdn.vrchat.com", "assets.vrchat.com"}
