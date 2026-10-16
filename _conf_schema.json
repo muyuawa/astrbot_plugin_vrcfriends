@@ -1,0 +1,26 @@
+{
+  "contact_url": {
+    "description": "机器人管理者联系方式",
+    "type": "string",
+    "default": "",
+    "hint": "必填，由机器人管理员填写一次。提供一个能联系到你的邮箱或 HTTPS 个人联系页面，随接口请求交给 VRChat，用于标识这个机器人应用。例如邮箱是 123456@qq.com，就填 mailto:123456@qq.com（请换成自己的真实邮箱）。mailto: 表示后面是邮箱地址；插件不会发邮件，也不需要邮箱密码。各 QQ 用户的 VRC 登录仍独立。"
+  },
+  "poll_interval": {
+    "description": "好友上线检查间隔（秒）",
+    "type": "int",
+    "default": 120,
+    "hint": "实际范围 60–3600 秒。仅检查有订阅的账号，HTTP 只读轮询，不连接在线状态 WebSocket。"
+  },
+  "proxy": {
+    "description": "VRChat API 代理",
+    "type": "string",
+    "default": "",
+    "hint": "可选，例如 http://127.0.0.1:7890。Docker 中请使用容器可访问的代理地址。"
+  },
+  "browser_path": {
+    "description": "本地浏览器可执行文件",
+    "type": "string",
+    "default": "",
+    "hint": "留空使用 Playwright Chromium，缺失时会在后台自动下载安装。也可填写已有 Chrome/Edge 的完整可执行文件路径，跳过下载。准备失败会使用文字回复，修复环境后重载插件可重试。"
+  }
+}
